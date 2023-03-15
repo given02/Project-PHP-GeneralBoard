@@ -1,25 +1,16 @@
-<?php include  $_SERVER['DOCUMENT_ROOT']."/db.php"; ?>
+<?php include "./db.php"; ?>
 
 <!doctype html>
 <head>
 <meta charset="UTF-8">
-<title>게시판</title>
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<title>자유게시판</title>
+<link rel="stylesheet" type="text/css" href="./css/style.css" />
 </head>
 <body>
-  <?php
-    if(isset($_SESSION['userid'])){
-      echo "<h2>{$_SESSION['userid']} 님 환영합니다.</h2>";
-    ?>
-    <a href="/logout.php"><input type="button" value="로그아웃" /></a>
-    <?php 
-    } else {
-      echo "<script>alert('잘못된 접근입니다.'); location.href='/login.php';</script>";
-    } 
-    ?>
   <div id="board_area"> 
     <h1>자유게시판</h1>
     <h4>자유롭게 글을 쓸 수 있는 게시판입니다.</h4>
+    <?php isLogin(); ?>
       <table class="list-table">
         <thead>
           <tr>
@@ -36,20 +27,20 @@
           while($board = $sql->fetch_array())
           {
             //title변수에 DB에서 가져온 title을 선택
-            $title=$board["title"]; 
+            $title=$board["TITLE"]; 
             if(strlen($title)>30)
             { 
-              //title이 30을 넘어서면 ...표시
-              $title=str_replace($board["title"],mb_substr($board["title"],0,30,"utf-8")."...",$board["title"]);
+              //title이 30을 넘으면 ...표시
+              $title=str_replace($board["TITLE"],mb_substr($board["TITLE"],0,30,"utf-8")."...",$board["TITLE"]);
             }
         ?>
         <tbody>
           <tr>
-            <td width="70"><?php echo $board['idx']; ?></td>
-            <td width="500"><a href="/read.php?idx=<?php echo $board["idx"];?>"><?php echo $title;?></a></td>
-            <td width="120"><?php echo $board['name']?></td>
-            <td width="100"><?php echo $board['date']?></td>
-            <td width="100"><?php echo $board['hit']; ?></td>
+            <td width="70"><?php echo $board['IDX']; ?></td>
+            <td width="500"><a href="./read.php?idx=<?php echo $board["IDX"];?>"><?php echo $title;?></a></td>
+            <td width="120"><?php echo $board['REG_ID']?></td>
+            <td width="100"><?php echo $board['REG_DATE']?></td>
+            <td width="100"><?php echo $board['HIT']; ?></td>
           </tr>
         </tbody>
         <?php 
@@ -57,7 +48,7 @@
         ?>
       </table>
       <div id="write_btn">
-        <a href="/write.php"><button>글쓰기</button></a>
+        <a href="./write.php"><button>글쓰기</button></a>
       </div>
   </div>
 </body>
