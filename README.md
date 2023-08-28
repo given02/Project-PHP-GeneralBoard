@@ -7,3 +7,4 @@ https://given02.cafe24.com/GeneralBoard-PHP/index.php
 - css
 - javascript
 - php
+- mysql
